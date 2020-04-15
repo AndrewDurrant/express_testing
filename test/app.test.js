@@ -30,27 +30,29 @@ describe('GET /sum', () => {
     return supertest(app)
       .get('/sum')
       .query({ a: 8 })
-      .expect(400, 'Value for b  is needed');
+      .expect(400, 'Value for b is needed');
   });
-  
-  // it('should return 400 if a is not numeric', () => {
-  //   return supertest(app)
-  //     .get('/sum')
-  //     .query({ a: 'string', b: 4 })
-  //     .expect(400, 'Number is needed for a');
-  // });
-  // it('should return 400 if b is not numeric', () => {
-  //   return supertest(app)
-  //     .get('/sum')
-  //     .query({ a: 8, b: 'string' })
-  //     .expect(400, 'Number is needed for b');
-  // });
-  // it('should return 400 if b is divided by zero', () => {
-  //   return supertest(app)
-  //     .get('/sum')
-  //     .query({ b: 0})
-  //     .expect(400, 'B cannot be zero');
-  // });
+
+  it('should return 400 if a is not numeric', () => {
+    return supertest(app)
+      .get('/sum')
+      .query({ a: 'string', b: 4 })
+      .expect(400, 'Value for a must be numeric');
+  });
+
+  it('should return 400 if b is not numeric', () => {
+    return supertest(app)
+      .get('/sum')
+      .query({ a: 8, b: 'string' })
+      .expect(400, 'Value for b must be numeric');
+  });
+
+  it('should return 400 if b is divided by zero', () => {
+    return supertest(app)
+      .get('/sum')
+      .query({ a: 8, b: 0})
+      .expect(400, 'Cannot divide by 0');
+  });
 
 });
 
