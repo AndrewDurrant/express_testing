@@ -30,7 +30,27 @@ describe('GET /midpoint endpoint', () => {
     const query = {
       lat1: 94.6976701,
       lon1: -74.2598674,
-      lat2: 
+      lat2: 200.0207305,
+      lon2: -118.6919221
     };
+
+    return supertest(app)
+      .get('/midpoint')
+      .query(query)
+      .expect(400, 'latitude must be 90 or lower');
   });
+  // this does not handle negative coordinates - figure that out.
+  // it('should return 400 if lon is greater than 180', () => {
+  //   const query = {
+  //     lat1: 77.6976701,
+  //     lon1: -183.2598674,
+  //     lat2: 40.0207305,
+  //     lon2: -191.6919221
+  //   };
+
+  //   return supertest(app)
+  //     .get('/midpoint')
+  //     .query(query)
+  //     .expect(400, 'longitude must be 180 or lower');
+  // });
 });

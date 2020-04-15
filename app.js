@@ -51,6 +51,7 @@ app.get('/sum', (req, res) => {
     .send(`${a} divided by ${b} is ${ans}`);
 });
 
+
 app.get('/generate', (req, res) => {
   // get n from the query string in the request body
   const { n } = req.query;
@@ -88,10 +89,32 @@ const toDegrees = (rad) => {
   return rad * (180 / Math.PI);
 };
 
+
 app.get('/midpoint', (req, res) => {
   const { lat1, lon1, lat2, lon2 } = req.query;
 
-  // validation goes here
+  // full validation still needed below:
+  if (lat1 > 90) {
+    return res
+      .status(400)
+      .send('latitude must be 90 or lower');
+  }
+  if (lat2 > 90) {
+    return res
+      .status(400)
+      .send('latitude must be 90 or lower');
+  } 
+
+  if (lon1 > 180) {
+    return res
+      .status(400)
+      .send('longitude must be 180 or lower');
+  }
+  if (lon2 > 180) {
+    return res
+      .status(400)
+      .send('longitude must be 180 or lower');
+  }
 
   const rlat1 = toRadians(lat1);
   const rlon1 = toRadians(lon1);
