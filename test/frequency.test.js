@@ -40,5 +40,50 @@ describe('GET /frequency endpoint', () => {
         expect(res.body).to.include(expected);
       });
   });
-  
+  it('should return the average frequency of characters', () => {
+    const query = {
+      s: 'aaBBAAbbaa'
+    };
+
+    const expected = {
+      average: 5
+    };
+
+    return supertest(app)
+      .get('/frequency')
+      .query(query)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .then(res => {
+        expect(res.body).to.include(expected);
+      });
+  });
+  it('should return the character with the highest frequency', () => {
+    const query = {
+      s: 'aaBBAAbbaa'
+    };
+
+    const expected = {
+      highest: 'a'
+    };
+
+    return supertest(app)
+      .get('/frequency')
+      .query(query)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .then(res => {
+        expect(res.body).to.include(expected);
+      });
+  });
+  it('should return 400 if no string is provided', () => {
+    const query = {
+      s: ''
+    };
+
+    return supertest(app)
+      .get('/frequency')
+      .query(query)
+      .expect(400);
+  });
 });
